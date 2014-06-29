@@ -1,5 +1,15 @@
+h1 {
+	font-family:'Oswald' sans-serif !important;
+}
 .green {
 	background-color:green;
+}
+.shield {
+	
+	width:500px;
+	margin-left:auto;
+	margin-right:auto;	
+
 }
 .black {
 	background-color:black;

@@ -3,7 +3,13 @@ angular.module('App').controller('gameController', ['$scope', 'guessService', fu
 $scope.colors = guessService.getColors();
 $scope.curGuesses = guessService.getColors();
 $scope.instance = guessService.create();
-
+$scope.init = function() {
+	$scope.correct = false;
+	$scope.lost = false;
+	$scope.colors = guessService.getColors();
+	$scope.curGuesses = guessService.getColors();
+	$scope.instance = guessService.create();
+}
 $scope.toggle = function(color, index) {
 	console.log("toggling");
 	if(color == $scope.colors[$scope.colors.length -1]) {
@@ -15,8 +21,16 @@ $scope.toggle = function(color, index) {
 
 	
 };
+$scope.correct = false;
+$scope.lost = false;
 $scope.makeGuess = function(g) {
 	$scope.instance.takeGuess(g);
+	if($scope.instance.isFinished()) {
+		$scope.lost = true;
+	}
+	if($scope.instance.isWon()) {
+		$scope.correct = true;
+	}
 };
 $scope.pegClass = function(peg) {
 	if(peg=='white') {

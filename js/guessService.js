@@ -1,10 +1,14 @@
 angular.module('App').factory('guessService', ['gameService', function(gameService) {
 
-	function Instance() {
+	function Instance(limit) {
 		this.game = gameService.init();
 		this.guess = [];
-		this.guessLimit = 10;
+		this.guessLimit = limit;
 		this.finished = false;
+		this.won = false;
+	};
+	Instance.prototype.isWon = function() {
+		return this.won;
 	};
 	Instance.prototype.isFinished = function() {
 
@@ -22,8 +26,15 @@ angular.module('App').factory('guessService', ['gameService', function(gameServi
 	Instance.prototype.takeGuess = function(g) {
 		var r =  this.game.evaluate(g);
 		this.guess.push({guess: angular.copy(g), result: r});
-		if(r == ['white']) { //TODO: check if r is completely white
-			this.finished = true;
+
+		if(r.length == g.length) {
+		for(var i in r) {
+			if(r[i] !== 'white') {
+				return;
+			}
+		}
+		this.won = true;
+	
 		}
 	};
 	
@@ -31,12 +42,12 @@ angular.module('App').factory('guessService', ['gameService', function(gameServi
 		return gameService.getColors();
 	};
 
-	function create() {
-		return new Instance();
+	function create(limit) {
+		return new Instance(limit);
 	};
 
 	return {
-		create : function() { return create(); },
+		create : function(limit) { return create(limit); },
 		getColors: function() { return getColors(); }
 	};
 }]);
