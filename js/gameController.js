@@ -1,4 +1,22 @@
-angular.module('App').controller('gameController', ['$scope', 'guessService', function($scope, guessService) {
+angular.module('App').controller('gameController', ['$scope', 'guessService','$modal', function($scope, guessService, $modal) {
+
+$scope.open = function () {
+  var modalInstance = $modal.open({
+      templateUrl: 'partials/initForm.html',
+     // controller: ModalInstanceCtrl,
+      size: 'md'
+    });
+  modalInstance.result.then(function (selectedItem) {
+      $scope.guessLength = guessLength;
+    }, function () {
+      $log.info('Modal dismissed at: ' + new Date());
+    });
+  };
+  };
+
+
+
+$scope.open();
 
 $scope.colors = guessService.getColors();
 $scope.curGuesses = guessService.getColors();
