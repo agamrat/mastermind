@@ -1,15 +1,26 @@
+var initCtrl = ['$scope','$modalInstance', function($scope, $modalInstance)
+{
+	$scope.form={};
+	$scope.form.guessSize = 10;
+	$scope.startGame = function() {
+		console.log("guess size is " + $scope.form.guessSize);
+		$modalInstance.close($scope.form.guessSize);
+	};
+}];
+
 angular.module('App').controller('gameController', ['$scope', 'guessService','$modal', function($scope, guessService, $modal) {
 
 $scope.open = function () {
   var modalInstance = $modal.open({
       templateUrl: 'partials/initForm.html',
-     // controller: ModalInstanceCtrl,
+       controller: initCtrl,
       size: 'md'
     });
-  modalInstance.result.then(function (selectedItem) {
+  modalInstance.result.then(function (guessLength) {
       $scope.guessLength = guessLength;
+	$scope.instance = guessService.create($scope.guessLength);
     }, function () {
-      $log.info('Modal dismissed at: ' + new Date());
+      console.log('Modal dismissed at: ' + new Date());
     });
   };
   
@@ -20,13 +31,13 @@ $scope.open();
 
 $scope.colors = guessService.getColors();
 $scope.curGuesses = guessService.getColors();
-$scope.instance = guessService.create();
+
 $scope.init = function() {
 	$scope.correct = false;
 	$scope.lost = false;
 	$scope.colors = guessService.getColors();
 	$scope.curGuesses = guessService.getColors();
-	$scope.instance = guessService.create();
+	$scope.open();
 }
 $scope.toggle = function(color, index) {
 	console.log("toggling");

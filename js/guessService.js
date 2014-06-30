@@ -24,9 +24,13 @@ angular.module('App').factory('guessService', ['gameService', function(gameServi
 	};
 
 	Instance.prototype.takeGuess = function(g) {
+	
 		var r =  this.game.evaluate(g);
 		this.guess.push({guess: angular.copy(g), result: r});
-
+		if(this.guess.length == this.guessLimit) {
+			this.finished=true;
+	
+		}
 		if(r.length == g.length) {
 		for(var i in r) {
 			if(r[i] !== 'white') {
