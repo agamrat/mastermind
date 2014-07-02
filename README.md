@@ -1,3 +1,3 @@
-AngularJS Mastermind
+<h1>AngularJS Mastermind</h1>
 
-A basic implementation of Mastermind using AngularJS to learn the concepts. 
+<p>A basic implementation of Mastermind using AngularJS to learn the concepts. </p>
