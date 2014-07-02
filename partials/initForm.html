@@ -1,16 +1,46 @@
 <div>
 <form role="form" ng-submit="startGame()">
 <div class="modal-header">
-	<h1>Mastermind Game Parameters</h1>
+	<h1>AngularJS Mastermind</h1>
 </div>
 <div class="modal-body">
 	<div class="row">
-	<div class="col-md-5">	
-	<label>Number of Guesses</label>
+		<div class="col-md-12">
+			<p>Mastermind is a simple game where you try to guess a sequence of colors through hints in the form of colored pegs. A white peg signifies a color placed in the correct position and a black one signifies a correct color in an incorrect position. More complete rules can be found <a href="http://en.wikipedia.org/wiki/Mastermind_(board_game)">here</a>.</p>
+			
+		</div>
 	</div>
-	<div class="col-md-7">
-	<input type="number" class="form-control" ng-required="true" ng-model="form.guessSize" />
-	</div>	
+
+	<div class="row">
+		<div class="col-md-12 text-center">
+			<button class="btn btn-primary"	type="submit">Start Traditional Game 
+			<i class="glyphicon glyphicon-chevron-right"></i></button>	
+
+			
+		</div>
+	</div>
+
+	<br />
+	<div class="row">
+		<div class="col-md-5">	
+			<label>Number of Guesses</label>
+		</div>
+		<div class="col-md-7">
+			<p>
+			<input type="number" class="form-control" ng-required="true" ng-model="form.guessSize" />
+			</p>		
+		</div>	
+	</div>
+
+	<div class="row">
+		<div class="col-md-5">	
+			<label>Number of Pegs in Solution</label>
+		</div>
+		<div class="col-md-7">
+			<p>
+			<input type="number" class="form-control" ng-required="true" ng-model="form.gameSize" />
+			</p>	
+		</div>	
 	</div>
 </div>
 

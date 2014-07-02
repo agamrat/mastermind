@@ -1,7 +1,8 @@
 angular.module('App').factory('guessService', ['gameService', function(gameService) {
 
-	function Instance(limit) {
-		this.game = gameService.init();
+	function Instance(limit, gameSize) {
+		console.log("gamesize is " + gameSize);
+		this.game = gameService.init(gameSize);
 		this.guess = [];
 		this.guessLimit = limit;
 		this.finished = false;
@@ -13,6 +14,9 @@ angular.module('App').factory('guessService', ['gameService', function(gameServi
 	Instance.prototype.isFinished = function() {
 
 		return this.finished;
+	};
+	Instance.prototype.guessTemplate = function() {
+		return gameService.init(this.game.gameSize).answer;
 	};
 	
 	Instance.prototype.getGameSize = function() {
@@ -46,12 +50,12 @@ angular.module('App').factory('guessService', ['gameService', function(gameServi
 		return gameService.getColors();
 	};
 
-	function create(limit) {
-		return new Instance(limit);
+	function create(limit, gameSize) {
+		return new Instance(limit, gameSize);
 	};
 
 	return {
-		create : function(limit) { return create(limit); },
+		create : function(limit, gameSize) { return create(limit, gameSize); },
 		getColors: function() { return getColors(); }
 	};
 }]);

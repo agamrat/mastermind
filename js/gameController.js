@@ -1,10 +1,11 @@
 var initCtrl = ['$scope','$modalInstance', function($scope, $modalInstance)
 {
-	$scope.form={};
-	$scope.form.guessSize = 10;
+	$scope.form={
+		guessSize:10,
+		gameSize:4
+	};
 	$scope.startGame = function() {
-		console.log("guess size is " + $scope.form.guessSize);
-		$modalInstance.close($scope.form.guessSize);
+		$modalInstance.close($scope.form);
 	};
 }];
 
@@ -16,9 +17,10 @@ $scope.open = function () {
        controller: initCtrl,
       size: 'md'
     });
-  modalInstance.result.then(function (guessLength) {
-      $scope.guessLength = guessLength;
-	$scope.instance = guessService.create($scope.guessLength);
+  modalInstance.result.then(function (form) {	
+	$scope.instance = guessService.create(form.guessLength, form.gameSize);
+	console.log("guess template is " + $scope.instance.guessTemplate());
+	$scope.cur = $scope.instance.guessTemplate();
     }, function () {
       console.log('Modal dismissed at: ' + new Date());
     });
@@ -30,36 +32,29 @@ $scope.open = function () {
 $scope.open();
 
 $scope.colors = guessService.getColors();
-$scope.curGuesses = guessService.getColors();
+
 
 $scope.init = function() {
-	$scope.correct = false;
-	$scope.lost = false;
-	$scope.colors = guessService.getColors();
-	$scope.curGuesses = guessService.getColors();
 	$scope.open();
 }
+
 $scope.toggle = function(color, index) {
 	console.log("toggling");
 	if(color == $scope.colors[$scope.colors.length -1]) {
-		$scope.curGuesses[index] = $scope.colors[0];
+		$scope.cur[index] = $scope.colors[0];
 		return;
 	}
 	console.log("scope colors index at "+$scope.colors.indexOf(color) );
-	$scope.curGuesses[index] = $scope.colors[$scope.colors.indexOf(color) +1];
+	$scope.cur[index] = $scope.colors[$scope.colors.indexOf(color) +1];
 
 	
 };
-$scope.correct = false;
-$scope.lost = false;
+
+
 $scope.makeGuess = function(g) {
 	$scope.instance.takeGuess(g);
-	if($scope.instance.isFinished()) {
-		$scope.lost = true;
-	}
-	if($scope.instance.isWon()) {
-		$scope.correct = true;
-	}
+	
+
 };
 $scope.pegClass = function(peg) {
 	if(peg=='white') {

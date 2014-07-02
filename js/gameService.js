@@ -2,7 +2,7 @@ angular.module('App').factory('gameService', ['utilService', function(utilServic
 
 
 	function getColors() {
-		return ['blue','yellow', 'green', 'red'];
+		return ['blue','yellow', 'green', 'red', 'white', 'black'];
 	};
 
 	
@@ -19,7 +19,7 @@ angular.module('App').factory('gameService', ['utilService', function(utilServic
 			var index =  randomIndex(choices.length);
 			answer.push(choices[index]);
 		}	
-
+		console.log("answer is " + answer);
 		return answer;
 	}
 
@@ -27,8 +27,8 @@ angular.module('App').factory('gameService', ['utilService', function(utilServic
 
 
 
-	function Game() {
-		this.answer = createAnswer(4);
+	function Game(size) {
+		this.answer = createAnswer(size);
 		this.gameSize = this.answer.length;
 
 	};
@@ -49,7 +49,6 @@ angular.module('App').factory('gameService', ['utilService', function(utilServic
 			}
 		
 		}
-		
 
 		guessFree = utilService.countOccurrences(guessFree);
 		answerFree = utilService.countOccurrences(answerFree);
@@ -60,7 +59,6 @@ angular.module('App').factory('gameService', ['utilService', function(utilServic
 			console.log("key is " + key);
 			if(guessFree.hasOwnProperty(key) && answerFree[key] != undefined) {
 			var overlap = Math.min(guessFree[key], answerFree[key]);
-			console.log("For color " + guessFree[i] + " overlap is " + overlap);
 			for(var j = 1; j < overlap+1; j++) {
 				result.push('black');
 			}
@@ -73,8 +71,8 @@ angular.module('App').factory('gameService', ['utilService', function(utilServic
 
 	};
 
-	function init() {
-		return new Game();
+	function init(size) {
+		return new Game(size);
 
 	};
 
@@ -82,7 +80,7 @@ angular.module('App').factory('gameService', ['utilService', function(utilServic
 
 
 	return {
-		init: function() { return init(); },
+		init: function(size) { return init(size); },
 		getColors: function() { return getColors(); },
 	};
 
