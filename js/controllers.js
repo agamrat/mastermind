@@ -1,4 +1,4 @@
-var initCtrl = ['$scope','$modalInstance', function($scope, $modalInstance)
+angular.module('App').controller('initCtrl', ['$scope','$modalInstance', function($scope, $modalInstance)
 {
 	$scope.form={
 		guessSize:10,
@@ -7,44 +7,64 @@ var initCtrl = ['$scope','$modalInstance', function($scope, $modalInstance)
 	$scope.startGame = function() {
 		$modalInstance.close($scope.form);
 	};
-}];
+}]);
+
+angular.module('App').controller('endModalCtrl', ['$scope','$modalInstance','params', function($scope, $modalInstance, params)
+{
+	$scope.params = params;
+	$scope.play = function() {
+		$modalInstance.close();
+	};
+}]);
+
 
 angular.module('App').controller('gameController', ['$scope', 'guessService','$modal', function($scope, guessService, $modal) {
 
-$scope.open = function () {
+$scope.init = function () {
   var modalInstance = $modal.open({
       templateUrl: 'partials/initForm.html',
-       controller: initCtrl,
+       controller: 'initCtrl',
       size: 'md'
     });
   modalInstance.result.then(function (form) {	
-	$scope.instance = guessService.create(form.guessLength, form.gameSize);
+	$scope.instance = guessService.create(form.guessSize, form.gameSize);
 	console.log("guess template is " + $scope.instance.guessTemplate());
 	$scope.cur = $scope.instance.guessTemplate();
-    }, function () {
-      console.log('Modal dismissed at: ' + new Date());
     });
   };
   
 
+$scope.end = function (modalTitle) {
+  var modalInstance = $modal.open({
+      templateUrl: 'partials/endModal.html',
+       controller: 'endModalCtrl',
+      	size: 'md',
+	resolve: {
+		params : function() {
+			return  {
+				answer: $scope.instance.game.answer,
+				title : modalTitle,
+				colorClass : $scope.colorClass
+		};
+	}
+	}
+    });
+  modalInstance.result.then(function () {	
+	$scope.init();
+    });
+  };
 
-
-$scope.open();
+$scope.init();
 
 $scope.colors = guessService.getColors();
 
 
-$scope.init = function() {
-	$scope.open();
-}
 
 $scope.toggle = function(color, index) {
-	console.log("toggling");
 	if(color == $scope.colors[$scope.colors.length -1]) {
 		$scope.cur[index] = $scope.colors[0];
 		return;
 	}
-	console.log("scope colors index at "+$scope.colors.indexOf(color) );
 	$scope.cur[index] = $scope.colors[$scope.colors.indexOf(color) +1];
 
 	
@@ -53,7 +73,12 @@ $scope.toggle = function(color, index) {
 
 $scope.makeGuess = function(g) {
 	$scope.instance.takeGuess(g);
-	
+	if($scope.instance.won) {
+		$scope.end('You won!');
+	}
+	else if($scope.instance.finished) {
+		$scope.end('Game over.');
+	}
 
 };
 $scope.pegClass = function(peg) {

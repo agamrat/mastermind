@@ -56,7 +56,6 @@ angular.module('App').factory('gameService', ['utilService', function(utilServic
 		
 
 		for(var key in guessFree) {
-			console.log("key is " + key);
 			if(guessFree.hasOwnProperty(key) && answerFree[key] != undefined) {
 			var overlap = Math.min(guessFree[key], answerFree[key]);
 			for(var j = 1; j < overlap+1; j++) {
@@ -85,3 +84,25 @@ angular.module('App').factory('gameService', ['utilService', function(utilServic
 	};
 
 }]);
+
+angular.module('App').service('utilService', function() {
+
+	function countOccurrences(arr) {
+		var result ={};
+		for(var i in arr) {
+			if(!result[arr[i]]) {
+				result[arr[i]] = 0;
+			}
+			result[arr[i]] =result[arr[i]]+1;
+		}
+		return result;
+
+	};
+
+
+	return {
+		countOccurrences : function(a) { return countOccurrences(a);}
+
+	};
+
+});

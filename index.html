@@ -12,14 +12,6 @@
 <div class="shield well">
 	
 	<h1 class="title">Mastermind</h1>
-	
-	<div ng-show="instance.won">
-		You are correct</div>
-	<div ng-show="instance.finished && !instance.won">
-		You have lost</div>
-	<div ng-show="correct || lost">
-		<button ng-click="init()">Play Again</button>
-	</div>
 
 	<div ng-repeat="g in instance.guess track by $index">
 		<div class="row">
@@ -51,17 +43,17 @@
 	</div>
 </div>
 </div>
-<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 
-<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.2.16/angular.min.js" type="text/javascript"></script>
-<link href="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css" rel="stylesheet">
-<link href='http://fonts.googleapis.com/css?family=Oswald' rel='stylesheet' type='text/css'>
-<script src="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js" type="text/javascript"></script>
-<script src="http://cdn.jsdelivr.net/angular.bootstrap/0.11.0/ui-bootstrap-tpls.min.js" type="text/javascript"></script>
-<script src="js/app.js"></script>
-<script src="js/utilService.js"></script>
-<script src="js/gameService.js"></script>
-<script src="js/guessService.js"></script>
-<script src="js/gameController.js"></script>
+	<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.2.16/angular.min.js" type="text/javascript"></script>
+	<link href="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css" rel="stylesheet">
+	<link href='http://fonts.googleapis.com/css?family=Oswald' rel='stylesheet' type='text/css'>
+	<script src="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js" type="text/javascript"></script>
+	<script src="http://cdn.jsdelivr.net/angular.bootstrap/0.11.0/ui-bootstrap-tpls.min.js" type="text/javascript"></script>
+	<script src="js/app.js"></script>
+	<script src="js/filters.js"></script>
+	<script src="js/gameService.js"></script>
+	<script src="js/guessService.js"></script>
+	<script src="js/controllers.js"></script>
 </body>
 </html>
