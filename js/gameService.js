@@ -41,7 +41,7 @@ angular.module('App').factory('gameService', ['utilService', function(utilServic
 		var answerFree = [];
 		for(var i in guess) {
 			if(guess[i] == this.answer[i]) {
-				result.push('white');
+				result.push('black');
 			}
 			else {
 				guessFree.push(guess[i]);
@@ -59,7 +59,7 @@ angular.module('App').factory('gameService', ['utilService', function(utilServic
 			if(guessFree.hasOwnProperty(key) && answerFree[key] != undefined) {
 			var overlap = Math.min(guessFree[key], answerFree[key]);
 			for(var j = 1; j < overlap+1; j++) {
-				result.push('black');
+				result.push('white');
 			}
 			}
 		}
